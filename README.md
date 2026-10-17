@@ -61,9 +61,39 @@ Develop an interactive ALV reporting solution on SAP S/4HANA that enables users 
 6. Testing, documentation, and GitHub portfolio presentation.
 7. Modern ABAP and S/4HANA enhancements.
 
-## 📌 Project Status
+## 📸 Project Screenshots
 
-**Status:** Planning and requirements definition
+### Day 1: Basic ABAP Report
+Retrieved purchase order data from SAP S/4HANA using an ABAP database query and displayed the results using `WRITE` statements.
+
+![Day 1 - Basic Report Output](screenshots/day-01-report-output.png)
+
+### Day 2: Interactive ALV Grid
+Displayed purchase order item data using the ALV Grid, with interactive features such as sorting, filtering, and aggregation.
+
+![Day 2 - Interactive ALV Grid](screenshots/day-02-alv-grid.png)
+
+## 🚧 Project Status
+
+**Current Phase:** Day 2 — Interactive ALV Reporting
+
+**Completed**
+- [x] Project vision and roadmap
+- [x] Business Requirements Document (BRD)
+- [x] Technical Design Document (TDD)
+- [x] ABAP report with EKKO–EKPO data retrieval
+- [x] Purchase order selection screen
+- [x] Interactive ALV grid with field catalog
+- [x] Sorting and aggregation tested
+
+**In Progress**
+- [ ] Improve ALV presentation and usability
+- [ ] Validate report behavior and test cases
+- [ ] Complete project documentation
+
+**Upcoming**
+- [ ] Final testing and performance review
+- [ ] Document implementation and test evidence
 
 This is an independent learning and portfolio project. Features will be documented as they are implemented and tested.
 
