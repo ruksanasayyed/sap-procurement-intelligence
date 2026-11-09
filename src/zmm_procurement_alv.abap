@@ -10,9 +10,13 @@ REPORT zmm_procurement_alv NO STANDARD PAGE HEADING.
 
 *PARAMETERS: p_ebeln TYPE ebeln.
 
-DATA gv_ebeln TYPE ekko-ebeln.
+DATA: gv_ebeln TYPE ekko-ebeln,
+      gv_bukrs TYPE ekko-bukrs,
+      gv_lifnr TYPE ekko-lifnr.
 
-SELECT-OPTIONS s_ebeln FOR gv_ebeln.
+SELECT-OPTIONS: s_ebeln FOR gv_ebeln,
+                s_bukrs FOR gv_bukrs,
+                s_lifnr FOR gv_lifnr.
 
 TYPES: BEGIN OF ty_purchase_order,
          "ekko
@@ -72,13 +76,14 @@ FORM get_data .
     FROM ekko AS a INNER JOIN ekpo AS b
     ON a~ebeln = b~ebeln
     INTO CORRESPONDING FIELDS OF TABLE @gt_report
-    WHERE a~ebeln IN @s_ebeln.
+    WHERE a~ebeln IN @s_ebeln
+      AND a~bukrs IN @s_bukrs
+      AND a~lifnr IN @s_lifnr.
 
   gv_count = lines( gt_report ).
 
-  WRITE:/2 'Purchasing Orders', 22 ': ' , 25 s_ebeln.
+  WRITE:/2 'Purchase Order Selection Applied'.
   WRITE:/2 'Items Retrieved', 22 ': ' , 25 gv_count.
-  WRITE:/2 '------------------------------------------------'.
 
 ENDFORM.
 
@@ -99,7 +104,7 @@ FORM print_fieldcat .
   gs_fieldcat-tabname = 'GT_REPORT'. "TABLE NAME
   APPEND gs_fieldcat TO gt_fieldcat.
 
-   CLEAR gs_fieldcat.
+  CLEAR gs_fieldcat.
 
   gs_fieldcat-fieldname = 'BUKRS'.
   gs_fieldcat-seltext_m = 'COMPANY CODE'.
@@ -165,11 +170,11 @@ FORM print_fieldcat .
 
     CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'
       EXPORTING
-        it_fieldcat         = gt_fieldcat
+        it_fieldcat        = gt_fieldcat
         i_callback_program = sy-repid
       TABLES
-        t_outtab            = gt_report.
+        t_outtab           = gt_report.
 
-    ENDIF.
+  ENDIF.
 
 ENDFORM.
