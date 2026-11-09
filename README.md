@@ -63,7 +63,7 @@ Develop an interactive ALV reporting solution on SAP S/4HANA that enables users 
 
 ## 🚧 Project Status
 
-**Current Phase:** Day 3 — Flexible Purchase Order Selection
+**Current Phase:** Day 4 — Multiple Selection Criteria & Data Validation
 
 ### Completed
 
@@ -78,13 +78,17 @@ Develop an interactive ALV reporting solution on SAP S/4HANA that enables users 
 - [x] Sorting and aggregation tested
 - [x] Flexible purchase order selection using `SELECT-OPTIONS`
 - [x] Multiple purchase order retrieval using SQL `IN`
-- [x] Retrieval of 20 purchase order items across a selected range
+- [x] Company code selection using `SELECT-OPTIONS`
+- [x] Supplier selection using `SELECT-OPTIONS`
+- [x] Combined filtering across purchase order, company code, and supplier
+- [x] Optional selection criteria validated
+- [x] Three selection scenarios successfully tested
 
 ### In Progress
 
-- [ ] Test single-value and empty selections
 - [ ] Explore selection-table concepts (`SIGN`, `OPTION`, `LOW`, `HIGH`)
 - [ ] Improve ALV presentation and usability
+- [ ] Investigate data consistency for quantity and order value fields
 - [ ] Validate report behavior with additional test cases
 
 ### Upcoming
@@ -119,6 +123,30 @@ Enhanced the selection screen using `SELECT-OPTIONS`, allowing users to enter in
 Successfully retrieved 20 purchase order items across a selected purchase order range using ABAP SQL with the `IN` operator.
 
 ![Day 3 - Multiple PO ALV Output](screenshots/day-03-multiple-po-alv.png)
+
+### Day 4: Multiple Selection Criteria
+
+Enhanced the selection screen with purchase order, company code, and supplier selection criteria to support flexible procurement reporting.
+
+![Day 4 - Selection Screen](screenshots/day-04-selection-screen.png)
+
+### Day 4: Purchase Order Range and Company Code Filtering
+
+Validated combined filtering using a purchase order range and company code.
+
+![Day 4 - PO Range and Company Code](screenshots/day-04-po-range-company-filter.png)
+
+### Day 4: Company Code and Supplier Filtering
+
+Verified that the report retrieves matching purchase order items using company code and supplier selection criteria.
+
+![Day 4 - Company Code and Supplier](screenshots/day-04-company-supplier-filter.png)
+
+### Day 4: Optional Selection Criteria
+
+Tested the report with all selection fields empty and verified that purchase order data across available company codes could be retrieved.
+
+![Day 4 - Empty Selection Output](screenshots/day-04-empty-selection-output.png)
 
 ---
 
