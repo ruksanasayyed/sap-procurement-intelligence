@@ -57,13 +57,14 @@ Develop an interactive ALV reporting solution on SAP S/4HANA that enables users 
 2. Data source analysis and report structure.
 3. Classical ALV report implementation.
 4. Flexible selection screens and procurement data filtering.
-5. Advanced ALV functionality and exception analysis.
-6. Validation, debugging, and performance improvements.
-7. Modern ABAP and S/4HANA enhancements.
+5. ALV presentation enhancement and database-level data validation.
+6. Testing, debugging, and performance improvements.
+7. Final documentation and interview preparation.
+8. Future enhancements: Modern ABAP, CDS Views and RAP.
 
 ## 🚧 Project Status
 
-**Current Phase:** Day 4 — Multiple Selection Criteria & Data Validation
+**Current Phase:** Day 6 — Testing, Debugging & Performance Review
 
 ### Completed
 
@@ -78,18 +79,21 @@ Develop an interactive ALV reporting solution on SAP S/4HANA that enables users 
 - [x] Sorting and aggregation tested
 - [x] Flexible purchase order selection using `SELECT-OPTIONS`
 - [x] Multiple purchase order retrieval using SQL `IN`
-- [x] Company code selection using `SELECT-OPTIONS`
-- [x] Supplier selection using `SELECT-OPTIONS`
-- [x] Combined filtering across purchase order, company code, and supplier
+- [x] Company code and supplier selection criteria
+- [x] Combined filtering across multiple selection criteria
 - [x] Optional selection criteria validated
-- [x] Three selection scenarios successfully tested
+- [x] ALV column widths configured using `OUTPUTLEN`
+- [x] ALV column headings and presentation improved
+- [x] Database validation using SE16N
+- [x] Compared EKPO source values with ALV output
+- [x] Confirmed that zero quantity and net order values originate in the source data
 
 ### In Progress
 
+- [ ] Investigate the business context behind zero-valued source records
 - [ ] Explore selection-table concepts (`SIGN`, `OPTION`, `LOW`, `HIGH`)
-- [ ] Improve ALV presentation and usability
-- [ ] Investigate data consistency for quantity and order value fields
-- [ ] Validate report behavior with additional test cases
+- [ ] Further improve ALV usability
+- [ ] Expand report validation with additional test cases
 
 ### Upcoming
 
@@ -147,6 +151,20 @@ Verified that the report retrieves matching purchase order items using company c
 Tested the report with all selection fields empty and verified that purchase order data across available company codes could be retrieved.
 
 ![Day 4 - Empty Selection Output](screenshots/day-04-empty-selection-output.png)
+
+### Day 5: ALV Presentation Enhancement
+
+Improved the ALV report layout by configuring column display widths using the `OUTPUTLEN` property of the `SLIS_FIELDCAT_ALV` field catalog structure. Updated the presentation to make column headings and procurement data easier to read.
+
+![Day 5 - ALV Presentation](screenshots/day-05-alv-presentation.png)
+
+### Day 5: Database-Level Data Validation
+
+Investigated zero values displayed in the purchase order quantity and net order value columns. Used SE16N to inspect the corresponding EKPO records and compared the database values with the ALV output.
+
+Confirmed that the report accurately retrieves the source data, and that the zero values already exist in the database.
+
+![Day 5 - EKPO Data Validation](screenshots/day-05-ekpo-data-validation.png)
 
 ---
 

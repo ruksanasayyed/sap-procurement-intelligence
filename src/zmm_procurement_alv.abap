@@ -102,6 +102,7 @@ FORM print_fieldcat .
   gs_fieldcat-fieldname = 'EBELN'.
   gs_fieldcat-seltext_m = 'PO NUMBER'. "SELECTION TEXT
   gs_fieldcat-tabname = 'GT_REPORT'. "TABLE NAME
+  gs_fieldcat-outputlen = 15. "ALV grid width
   APPEND gs_fieldcat TO gt_fieldcat.
 
   CLEAR gs_fieldcat.
@@ -109,20 +110,23 @@ FORM print_fieldcat .
   gs_fieldcat-fieldname = 'BUKRS'.
   gs_fieldcat-seltext_m = 'COMPANY CODE'.
   gs_fieldcat-tabname = 'GT_REPORT'.
+  gs_fieldcat-outputlen = 13.
   APPEND gs_fieldcat TO gt_fieldcat.
 
   CLEAR gs_fieldcat.
 
   gs_fieldcat-fieldname = 'LIFNR'.
-  gs_fieldcat-seltext_m = 'Supplier'.
+  gs_fieldcat-seltext_m = 'SUPPLIER'.
   gs_fieldcat-tabname = 'GT_REPORT'.
+  gs_fieldcat-outputlen = 15.
   APPEND gs_fieldcat TO gt_fieldcat.
 
   CLEAR gs_fieldcat.
 
   gs_fieldcat-fieldname = 'EBELP'.
-  gs_fieldcat-seltext_m = 'Item Number'.
+  gs_fieldcat-seltext_m = 'ITEM NUMBER'.
   gs_fieldcat-tabname = 'GT_REPORT'.
+  gs_fieldcat-outputlen = 12.
   APPEND gs_fieldcat TO gt_fieldcat.
 
   CLEAR gs_fieldcat.
@@ -130,6 +134,7 @@ FORM print_fieldcat .
   gs_fieldcat-fieldname = 'MATNR'.
   gs_fieldcat-seltext_m = 'MATERIAL NUMBER'.
   gs_fieldcat-tabname = 'GT_REPORT'.
+  gs_fieldcat-outputlen = 18.
   APPEND gs_fieldcat TO gt_fieldcat.
 
   CLEAR gs_fieldcat.
@@ -137,6 +142,7 @@ FORM print_fieldcat .
   gs_fieldcat-fieldname = 'WERKS'.
   gs_fieldcat-seltext_m = 'PLANT'.
   gs_fieldcat-tabname = 'GT_REPORT'.
+  gs_fieldcat-outputlen = 10.
   APPEND gs_fieldcat TO gt_fieldcat.
 
   CLEAR gs_fieldcat.
@@ -144,6 +150,7 @@ FORM print_fieldcat .
   gs_fieldcat-fieldname = 'MENGE'.
   gs_fieldcat-seltext_m = 'PO QUANTITY'.
   gs_fieldcat-tabname = 'GT_REPORT'.
+  gs_fieldcat-outputlen = 15.
   APPEND gs_fieldcat TO gt_fieldcat.
 
   CLEAR gs_fieldcat.
@@ -151,6 +158,7 @@ FORM print_fieldcat .
   gs_fieldcat-fieldname = 'NETPR'.
   gs_fieldcat-seltext_m = 'NET PRICE'.
   gs_fieldcat-tabname = 'GT_REPORT'.
+  gs_fieldcat-outputlen = 15.
   APPEND gs_fieldcat TO gt_fieldcat.
 
   CLEAR gs_fieldcat.
@@ -158,6 +166,7 @@ FORM print_fieldcat .
   gs_fieldcat-fieldname = 'NETWR'.
   gs_fieldcat-seltext_m = 'NET ORDER VALUE'.
   gs_fieldcat-tabname = 'GT_REPORT'.
+  gs_fieldcat-outputlen = 18.
   APPEND gs_fieldcat TO gt_fieldcat.
 
   CLEAR gs_fieldcat.
