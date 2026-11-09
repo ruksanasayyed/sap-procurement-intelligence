@@ -8,7 +8,11 @@ REPORT zmm_procurement_alv NO STANDARD PAGE HEADING.
 * Project: SAP Procurement Intelligence
 * Purpose: Procurement ALV Reporting
 
-PARAMETERS: p_ebeln TYPE ebeln.
+*PARAMETERS: p_ebeln TYPE ebeln.
+
+DATA gv_ebeln TYPE ekko-ebeln.
+
+SELECT-OPTIONS s_ebeln FOR gv_ebeln.
 
 TYPES: BEGIN OF ty_purchase_order,
          "ekko
@@ -40,8 +44,7 @@ DATA: gt_fieldcat TYPE slis_t_fieldcat_alv, "ALV
 START-OF-SELECTION. "This is where our report's main logic will execute.
 
   PERFORM get_data.
-  PERFORM print_data.
-  Perform build_fieldcatalog.
+  PERFORM print_fieldcat.
 
 END-OF-SELECTION.
 *&---------------------------------------------------------------------*
@@ -69,138 +72,104 @@ FORM get_data .
     FROM ekko AS a INNER JOIN ekpo AS b
     ON a~ebeln = b~ebeln
     INTO CORRESPONDING FIELDS OF TABLE @gt_report
-    WHERE a~ebeln = @p_ebeln.
+    WHERE a~ebeln IN @s_ebeln.
 
   gv_count = lines( gt_report ).
 
-  WRITE:/2 'Purchasing Orders', 22 ': ' , 25 p_ebeln.
+  WRITE:/2 'Purchasing Orders', 22 ': ' , 25 s_ebeln.
   WRITE:/2 'Items Retrieved', 22 ': ' , 25 gv_count.
   WRITE:/2 '------------------------------------------------'.
 
 ENDFORM.
 
 *&---------------------------------------------------------------------*
-*& Form print_data
+*& Form PRINT_FIELDCAT
 *&---------------------------------------------------------------------*
 *& text
 *&---------------------------------------------------------------------*
 *& -->  p1        text
 *& <--  p2        text
 *&---------------------------------------------------------------------*
+FORM print_fieldcat .
 
-FORM print_data.
+  CLEAR gs_fieldcat.
 
-"ALV
+  gs_fieldcat-fieldname = 'EBELN'.
+  gs_fieldcat-seltext_m = 'PO NUMBER'. "SELECTION TEXT
+  gs_fieldcat-tabname = 'GT_REPORT'. "TABLE NAME
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+   CLEAR gs_fieldcat.
+
+  gs_fieldcat-fieldname = 'BUKRS'.
+  gs_fieldcat-seltext_m = 'COMPANY CODE'.
+  gs_fieldcat-tabname = 'GT_REPORT'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+
+  gs_fieldcat-fieldname = 'LIFNR'.
+  gs_fieldcat-seltext_m = 'Supplier'.
+  gs_fieldcat-tabname = 'GT_REPORT'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+
+  gs_fieldcat-fieldname = 'EBELP'.
+  gs_fieldcat-seltext_m = 'Item Number'.
+  gs_fieldcat-tabname = 'GT_REPORT'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+
+  gs_fieldcat-fieldname = 'MATNR'.
+  gs_fieldcat-seltext_m = 'MATERIAL NUMBER'.
+  gs_fieldcat-tabname = 'GT_REPORT'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+
+  gs_fieldcat-fieldname = 'WERKS'.
+  gs_fieldcat-seltext_m = 'PLANT'.
+  gs_fieldcat-tabname = 'GT_REPORT'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+
+  gs_fieldcat-fieldname = 'MENGE'.
+  gs_fieldcat-seltext_m = 'PO QUANTITY'.
+  gs_fieldcat-tabname = 'GT_REPORT'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+
+  gs_fieldcat-fieldname = 'NETPR'.
+  gs_fieldcat-seltext_m = 'NET PRICE'.
+  gs_fieldcat-tabname = 'GT_REPORT'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+
+  gs_fieldcat-fieldname = 'NETWR'.
+  gs_fieldcat-seltext_m = 'NET ORDER VALUE'.
+  gs_fieldcat-tabname = 'GT_REPORT'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
 
   IF gt_report IS INITIAL.
 
-    WRITE: / 'No purchasing items found for the selection.'
-           COLOR 6 INVERSE ON.
+    WRITE: 'No purchasing items found for the selection.' COLOR 6 INVERSE ON.
 
   ELSE.
 
-    PERFORM build_fieldcatalog.
-
     CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'
       EXPORTING
+        it_fieldcat         = gt_fieldcat
         i_callback_program = sy-repid
-        i_grid_title       = 'Procurement Intelligence ALV Report'
-        it_fieldcat        = gt_fieldcat
       TABLES
-        t_outtab           = gt_report
-      EXCEPTIONS
-        program_error      = 1
-        OTHERS             = 2.
+        t_outtab            = gt_report.
 
-    IF sy-subrc <> 0.
-      MESSAGE 'ALV display failed' TYPE 'S'
-              DISPLAY LIKE 'E'.
     ENDIF.
-
-  ENDIF.
-
-**    IF gt_report[] IS INITIAL. "CLASSICAL
-**
-**    WRITE: /2 'No purchasing items found for the selection.'
-**       COLOR 6 INVERSE ON.
-**
-**  ELSE.
-**
-**    LOOP AT gt_report INTO gs_report.
-**
-**      AT FIRST.
-**
-**        WRITE:/2 'PO Number' COLOR 7 INVERSE ON, 20 'Company Code' COLOR 7 INVERSE ON, 40 'Supplier Acc-No ' COLOR 7 INVERSE ON,
-**        65 'Item Number' COLOR 7 INVERSE ON ,85 'Material Number' COLOR 7 INVERSE ON, 110 'Plant' COLOR 7 INVERSE ON,
-**        125 'PO Quantity' COLOR 7 INVERSE ON, 145 'Net Price' COLOR 7 INVERSE ON, 165 'Net Order Value' COLOR 7 INVERSE ON.
-**
-**        ULINE.
-**
-**      ENDAT.
-**
-**      WRITE:/2 gs_report-ebeln LEFT-JUSTIFIED, 20 gs_report-bukrs LEFT-JUSTIFIED, 40 gs_report-lifnr LEFT-JUSTIFIED,
-**      65 gs_report-ebelp LEFT-JUSTIFIED, 85 gs_report-matnr LEFT-JUSTIFIED, 110 gs_report-werks LEFT-JUSTIFIED,
-**      125 gs_report-menge LEFT-JUSTIFIED, 145 gs_report-netpr LEFT-JUSTIFIED, 165 gs_report-netwr LEFT-JUSTIFIED.
-**
-**    ENDLOOP.
-**
-**  ENDIF.
-
-ENDFORM.
-
-*&---------------------------------------------------------------------*
-*& Form build_fieldcatalog
-*&---------------------------------------------------------------------*
-*& text
-*&---------------------------------------------------------------------*
-*& -->  p1        text
-*& <--  p2        text
-*&---------------------------------------------------------------------*
-FORM build_fieldcatalog . "ALV
-
-  CLEAR gs_fieldcat.
-  gs_fieldcat-fieldname = 'EBELN'.
-  gs_fieldcat-seltext_m = 'PO Number'.
-  APPEND gs_fieldcat TO gt_fieldcat.
-
-  CLEAR gs_fieldcat.
-  gs_fieldcat-fieldname = 'BUKRS'.
-  gs_fieldcat-seltext_m = 'Company Code'.
-  APPEND gs_fieldcat TO gt_fieldcat.
-
-  CLEAR gs_fieldcat.
-  gs_fieldcat-fieldname = 'LIFNR'.
-  gs_fieldcat-seltext_m = 'Supplier'.
-  APPEND gs_fieldcat TO gt_fieldcat.
-
-  CLEAR gs_fieldcat.
-  gs_fieldcat-fieldname = 'EBELP'.
-  gs_fieldcat-seltext_m = 'Item Number'.
-  APPEND gs_fieldcat TO gt_fieldcat.
-
-  CLEAR gs_fieldcat.
-  gs_fieldcat-fieldname = 'MATNR'.
-  gs_fieldcat-seltext_m = 'Material'.
-  APPEND gs_fieldcat TO gt_fieldcat.
-
-  CLEAR gs_fieldcat.
-  gs_fieldcat-fieldname = 'WERKS'.
-  gs_fieldcat-seltext_m = 'Plant'.
-  APPEND gs_fieldcat TO gt_fieldcat.
-
-  CLEAR gs_fieldcat.
-  gs_fieldcat-fieldname = 'MENGE'.
-  gs_fieldcat-seltext_m = 'PO Quantity'.
-  APPEND gs_fieldcat TO gt_fieldcat.
-
-  CLEAR gs_fieldcat.
-  gs_fieldcat-fieldname = 'NETPR'.
-  gs_fieldcat-seltext_m = 'Net Price'.
-  APPEND gs_fieldcat TO gt_fieldcat.
-
-  CLEAR gs_fieldcat.
-  gs_fieldcat-fieldname = 'NETWR'.
-  gs_fieldcat-seltext_m = 'Net Order Value'.
-  APPEND gs_fieldcat TO gt_fieldcat.
 
 ENDFORM.

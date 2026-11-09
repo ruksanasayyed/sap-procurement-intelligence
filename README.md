@@ -36,7 +36,7 @@ Develop an interactive ALV reporting solution on SAP S/4HANA that enables users 
 - SAP S/4HANA
 - ABAP
 - SAP GUI: SE38 / SE80
-- ALV Reporting
+- Classical ALV Reporting (`REUSE_ALV_GRID_DISPLAY`)
 - ABAP Dictionary
 - Open SQL
 - Git and GitHub
@@ -55,48 +55,73 @@ Develop an interactive ALV reporting solution on SAP S/4HANA that enables users 
 
 1. Business requirements and technical design.
 2. Data source analysis and report structure.
-3. Selection screen and initial ALV report.
-4. Filtering, sorting, totals, and exception analysis.
-5. Validation, debugging, and performance improvements.
-6. Testing, documentation, and GitHub portfolio presentation.
+3. Classical ALV report implementation.
+4. Flexible selection screens and procurement data filtering.
+5. Advanced ALV functionality and exception analysis.
+6. Validation, debugging, and performance improvements.
 7. Modern ABAP and S/4HANA enhancements.
+
+## 🚧 Project Status
+
+**Current Phase:** Day 3 — Flexible Purchase Order Selection
+
+### Completed
+
+- [x] Project vision and roadmap
+- [x] Business Requirements Document (BRD)
+- [x] Technical Design Document (TDD)
+- [x] ABAP report with EKKO–EKPO data retrieval
+- [x] INNER JOIN using Open SQL
+- [x] Purchase order selection using `PARAMETERS`
+- [x] Interactive ALV Grid using `REUSE_ALV_GRID_DISPLAY`
+- [x] Custom ALV field catalog
+- [x] Sorting and aggregation tested
+- [x] Flexible purchase order selection using `SELECT-OPTIONS`
+- [x] Multiple purchase order retrieval using SQL `IN`
+- [x] Retrieval of 20 purchase order items across a selected range
+
+### In Progress
+
+- [ ] Test single-value and empty selections
+- [ ] Explore selection-table concepts (`SIGN`, `OPTION`, `LOW`, `HIGH`)
+- [ ] Improve ALV presentation and usability
+- [ ] Validate report behavior with additional test cases
+
+### Upcoming
+
+- [ ] Advanced ALV interactions
+- [ ] Procurement exception analysis
+- [ ] Performance review
+- [ ] Further S/4HANA development concepts
 
 ## 📸 Project Screenshots
 
 ### Day 1: Basic ABAP Report
+
 Retrieved purchase order data from SAP S/4HANA using an ABAP database query and displayed the results using `WRITE` statements.
 
 ![Day 1 - Basic Report Output](screenshots/day-01-report-output.png)
 
 ### Day 2: Interactive ALV Grid
-Displayed purchase order item data using the ALV Grid, with interactive features such as sorting, filtering, and aggregation.
+
+Implemented an interactive ALV Grid using `REUSE_ALV_GRID_DISPLAY`, with a custom field catalog and standard ALV toolbar functionality.
 
 ![Day 2 - Interactive ALV Grid](screenshots/day-02-alv-grid.png)
 
-## 🚧 Project Status
+### Day 3: Flexible Purchase Order Selection
 
-**Current Phase:** Day 2 — Interactive ALV Reporting
+Enhanced the selection screen using `SELECT-OPTIONS`, allowing users to enter individual purchase orders or specify a range.
 
-**Completed**
-- [x] Project vision and roadmap
-- [x] Business Requirements Document (BRD)
-- [x] Technical Design Document (TDD)
-- [x] ABAP report with EKKO–EKPO data retrieval
-- [x] Purchase order selection screen
-- [x] Interactive ALV grid with field catalog
-- [x] Sorting and aggregation tested
+![Day 3 - Selection Screen](screenshots/day-03-selection-screen.png)
 
-**In Progress**
-- [ ] Improve ALV presentation and usability
-- [ ] Validate report behavior and test cases
-- [ ] Complete project documentation
+### Day 3: Multiple Purchase Order Retrieval
 
-**Upcoming**
-- [ ] Final testing and performance review
-- [ ] Document implementation and test evidence
+Successfully retrieved 20 purchase order items across a selected purchase order range using ABAP SQL with the `IN` operator.
 
-This is an independent learning and portfolio project. Features will be documented as they are implemented and tested.
+![Day 3 - Multiple PO ALV Output](screenshots/day-03-multiple-po-alv.png)
 
 ---
+
+*This is an independent learning and portfolio project. Features are documented as they are implemented and tested.*
 
 *The goal is not merely to write ABAP code, but to build a maintainable solution that connects SAP technology with real business needs.*
